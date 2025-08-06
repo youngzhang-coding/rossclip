@@ -1,0 +1,74 @@
+clip:
+  use_pretrained: True
+  # The parameters below are available if use_pretrained is set to false.
+  # visual
+  embed_dim: 512
+  image_resolution: 224
+  vision_layers: 12
+  vision_width: 768
+  vision_patch_size: 32
+
+  # text
+  context_length: 77
+  vocab_size: 49408
+  transformer_width: 512 
+  transformer_heads: 8
+  transformer_layers: 12
+
+  #pretrain parameters
+  pretrained:
+    model_name: "ViT-B-32"
+    org: "openai"
+    load_weights: true
+
+diffusion:
+  pretrained_model_name_or_path: "runwayml/stable-diffusion-inpainting"
+  num_inference_steps: 50
+  strength: 1.0
+
+loss:
+  gamma: 1
+
+train:
+  batch_size: 64
+  epochs: 50
+  gpus: 1
+  gpu_ids: [0]
+  num_workers: 8
+  save_interval: 5 
+  checkpoints_path: "./checkpoints"
+  seed: 42
+  precision: "16-mixed"
+  distributed: true
+
+  lr: 5e-4
+  weight_decay: 0.5
+  betas: [0.9, 0.98]
+  eps: 1e-6
+
+    # Scheduler configuration
+  scheduler:
+    type: "cosine_warmup"
+
+    final_lr: 1e-5  # Final learning rate
+    warmup_epochs: 1  # Number of warmup epochs
+    start_warmup_lr: 1e-6  # Starting learning rate during warmup
+
+    T_0: 10          # Initial restart period (in epochs)
+    T_mult: 2        # Period multiplier
+    eta_min: 1e-6    # Minimum learning rate
+    frequency: 1           # How often to update
+  
+
+data:
+  data_info_path: "/data1/zhangyang/rossclip/dataset/output/meta.json"
+  top_k: 5
+  max_condition_length: 256
+  iou_threshold: 0.5
+
+logger:
+  api_key: "jky9FNFkjlyIj6GA3Z3Mz"
+  project_name: "ross_clip"
+  workspace: "zy_uestc"
+  experiment_name: "train"
+  logdir: "./train_log"
