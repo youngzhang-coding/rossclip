@@ -1,0 +1,8 @@
+.vscode/
+detected_results/
+dataset/
+lightning_logs/
+ross_clip/
+outputs/
+train_log/
+tests/
