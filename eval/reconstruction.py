@@ -1,5 +1,4 @@
 import torch
-import numpy as np
 from src.models.ross_clip import load_pretrained_model
 from omegaconf import DictConfig
 from scripts.process_data import process_single_image
